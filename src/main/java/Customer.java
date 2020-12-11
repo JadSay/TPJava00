@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Customer {
 
 	private String _id;
@@ -10,7 +13,10 @@ public class Customer {
     private String _state;
     private String _zipcode;
     private String _country;
-    private String _mail;
+	private String _mail;
+	
+	private static final String EMAIL_PATTERN = "^(?=.{1,20}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+	private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
     public Customer(String id, String firstname, String lastname) {
         _id = id;
@@ -149,21 +155,12 @@ public class Customer {
 	}
 
 	public boolean checkMail() {
-		int minLength = 7;
-		int maxLength = 30;
-		if((this._mail == null || this._mail.length() == 0)) {
+		String email = this._mail;
+		if((email == null || email.length() == 0)) {
 			return false;
 		}
-		if(this._mail.length() < minLength) {
-			return false;
-		}
-		if(this._mail.length() > maxLength) {
-			return false;
-		}
-		if(!this._mail.contains("@")) {
-			return false;
-		}
-		return true;
+		Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
 	}
 
 	public static Customer find(String string) {
