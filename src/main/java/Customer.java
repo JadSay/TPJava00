@@ -18,7 +18,7 @@ public class Customer {
         _lastname = lastname;
     }
 
-	public Customer(String id, String firstname, String lastname, String tel, String street1, String street2, String city, String state, String country, String zipcode, String mail) {
+	public Customer(String id, String firstname, String lastname, String tel, String street1, String street2, String city, String state, String zipcode, String country, String mail) {
         _id = id;
         _firstname = firstname;
         _lastname = lastname;
@@ -123,15 +123,47 @@ public class Customer {
 	}
 
 	public boolean checkData() {
-		return false;
+		if((this._id == null || this._id.length() == 0)) {
+			return false;
+		}
+		if((this._firstname == null || this._firstname.length() == 0)) {
+			return false;
+		}
+		if((this._lastname == null || this._lastname.length() == 0)) {
+			return false;
+		}
+		return true;
 	}
 
 	public String getCheckDataError() {
+		if((this._id == null || this._id.length() == 0)) {
+			return "Invalid id";
+		}
+		if((this._firstname == null || this._firstname.length() == 0)) {
+			return "Invalid first name";
+		}
+		if((this._lastname == null || this._lastname.length() == 0)) {
+			return "Invalid last name";
+		}
 		return null;
 	}
 
 	public boolean checkMail() {
-		return false;
+		int minLength = 7;
+		int maxLength = 30;
+		if((this._mail == null || this._mail.length() == 0)) {
+			return false;
+		}
+		if(this._mail.length() < minLength) {
+			return false;
+		}
+		if(this._mail.length() > maxLength) {
+			return false;
+		}
+		if(!this._mail.contains("@")) {
+			return false;
+		}
+		return true;
 	}
 
 	public static Customer find(String string) {
